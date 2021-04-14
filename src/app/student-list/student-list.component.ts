@@ -38,7 +38,6 @@ export class StudentListComponent implements OnInit{
   }
 
   onClearData(){
-   // this.studentList = [];
    this.stdService.clearData().subscribe(
      data => {
        this.fetchData();
