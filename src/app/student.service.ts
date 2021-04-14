@@ -1,33 +1,41 @@
 import { Injectable } from "@angular/core";
 import { Student } from "./student";
+import { HttpClient } from "@angular/common/http";
+import { pipe } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
 })
 export class StudentService {
-  STUDENTS: Student[] = [
-    {
-      id: 1,
-      name: "John",
-      age: 20
-    },
-    {
-      id: 2,
-      name: "Emily",
-      age: 21
-    },
-    {
-      id: 3,
-      name: "Jeremy",
-      age: 19
-    },
-    {
-      id: 4,
-      name: "Mary",
-      age: 18
-    }
-  ];
+  STUDENTS: Student[] = [];
 
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
+  addStudent(newStd: Student) {
+    return this.http.post(
+      "https://studentinfo-8d24a-default-rtdb.firebaseio.com/" + "student.json",
+      newStd
+    );
+  }
+
+  getStudentData() {
+    return this.http
+      .get<Student[]>(
+        "https://studentinfo-8d24a-default-rtdb.firebaseio.com/student.json"
+      )
+      .pipe(
+        map(data => {
+          let sArray: Student[] = [];
+          for (let key in data) sArray.push(data[key]);
+          return sArray;
+        })
+      );
+  }
+
+  clearData() {
+    return this.http.delete(
+      "https://studentinfo-8d24a-default-rtdb.firebaseio.com/student.json"
+    );
+  }
 }
