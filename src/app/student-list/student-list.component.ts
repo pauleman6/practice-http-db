@@ -20,8 +20,7 @@ export class StudentListComponent implements OnInit{
   }
 
   ngOnInit(){
-   // this.studentList = this.stdService.STUDENTS;
-   this.fetchData();
+   this.fetchData();//calling helper method.
   }
 
   addNewStudent(){
@@ -31,21 +30,21 @@ export class StudentListComponent implements OnInit{
       age: this.sAge
     }
     this.stdService.addStudent(newStudent).subscribe(
-      data => this.fetchData()
+      data => this.fetchData() //refetching data to reset studentList
     );
 
-    //this.studentList.push(newStudent);
   }
 
   onClearData(){
    this.stdService.clearData().subscribe(
      data => {
-       this.fetchData();
-       this.nextID = 0;
+       this.fetchData(); //refetch the data to reset studentList
+       this.nextID = 0; //reset the nextID
      }
    );
   }
 
+  //helper method
   fetchData(){
     this.stdService.getStudentData().subscribe(
       data => this.studentList = data
