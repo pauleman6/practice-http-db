@@ -12,7 +12,7 @@ import { Student } from '../student';
 export class StudentListComponent implements OnInit{
 
   studentList: Student[] = [];
-  nextID = 0;
+  nextID: number = 0;
   sName: string;
   sAge: number
 
@@ -25,7 +25,7 @@ export class StudentListComponent implements OnInit{
 
   addNewStudent(){
     const newStudent: Student = {
-      id: this.nextID++,
+      id: ++this.nextID,
       name: this.sName,
       age: this.sAge
     }
